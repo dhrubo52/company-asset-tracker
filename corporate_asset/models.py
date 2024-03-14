@@ -23,7 +23,7 @@ class Asset(models.Model):
     type = models.CharField(max_length=20, null=True)
     price = models.IntegerField(null=True)               # Price of the asset
     serial_number = models.CharField(max_length=50)      # Serial number of the asset
-    lent_to = models.ForeignKey('Employee', related_name='lent_devices', on_delete=models.SET_NULL, null=True)      # The employee the asset was lent to
+    lent_to = models.ForeignKey('Employee', related_name='lent_assets', on_delete=models.SET_NULL, null=True)      # The employee the asset was lent to
     condition_lent = models.TextField(null=True)         # Condition of the asset at the time of lending to the employee
     condition_returned = models.TextField(null=True)     # Condition of the asset at the time of being returned by the employee
     return_by = models.DateField(null=True)              # The date by which the employee has to return the asset
