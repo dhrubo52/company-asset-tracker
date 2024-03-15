@@ -5,5 +5,6 @@ urlpatterns = [
     path('company', views.CompanyList.as_view()),
     path('employee', views.EmployeeList.as_view()),
     path('asset', views.AssetList.as_view()),
-    path('asset-detail', views.AssetDetail.as_view())
+    path('asset-detail', views.AssetDetail.as_view()),
+    path('asset-log', views.AssetLogList.as_view())
 ]

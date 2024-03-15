@@ -5,7 +5,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 
 from corporate_asset.models import Company, Employee, Asset, AssetLog
-from corporate_asset.serializers import CompanySerializer, EmployeeSerializer, AssetSerializer
+from corporate_asset.serializers import (CompanySerializer, EmployeeSerializer, AssetSerializer,
+                                         AssetLogSerializer)
 
 # Create your views here.
 
@@ -132,3 +133,12 @@ class AssetDetail(APIView):
             print(serializer.errors)
             return Response(status=status.HTTP_400_BAD_REQUEST)
         
+
+class AssetLogList(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        asset_logs = AssetLog.objects.all()
+        serializer = AssetLogSerializer(asset_logs, many=True)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)            

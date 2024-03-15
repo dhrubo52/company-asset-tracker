@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from corporate_asset.models import Company, Employee, Asset
+from corporate_asset.models import Company, Employee, Asset, AssetLog
 
 class CompanySerializer(serializers.ModelSerializer):
     class Meta:
@@ -18,3 +18,10 @@ class AssetSerializer(serializers.ModelSerializer):
         model = Asset
         fields = ['id', 'company', 'name', 'type', 'price', 'serial_number', 'lent_to', 'condition_lent',
                   'condition_returned', 'return_by', 'returned_at']
+        
+
+class AssetLogSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AssetLog
+        fields = ['id', 'company', 'lent_to', 'condition_lent', 'condition_returned', 'return_by',
+                  'returned_at']
