@@ -1,2 +1,2 @@
 db.sqlite3
-/tracker/settings.py
+.env
