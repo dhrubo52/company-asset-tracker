@@ -1,10 +1,16 @@
 from rest_framework import serializers
-from corporate_asset.models import Company, Employee, Asset, AssetLog
+from corporate_asset.models import Company, CompanyAdmin, Employee, Asset, AssetLog
 
 class CompanySerializer(serializers.ModelSerializer):
     class Meta:
         model = Company
         fields = ['id', 'name', 'contact_number', 'email', 'address', 'employees', 'assets']
+
+
+class CompanyAdminSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CompanyAdmin
+        fields = ['id', 'user', 'company']
 
 
 class EmployeeSerializer(serializers.ModelSerializer):

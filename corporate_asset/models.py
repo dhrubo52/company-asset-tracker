@@ -12,9 +12,6 @@ class Company(models.Model):
 class CompanyAdmin(models.Model):
     user = models.OneToOneField(User, related_name='company_admin', on_delete=models.CASCADE)
     company = models.ForeignKey('Company', related_name='admins', on_delete=models.CASCADE)
-    
-    def full_name(self):
-        return self.user.first_name+' '+self.user.last_name
 
 
 class Employee(models.Model):

@@ -3,10 +3,11 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
+from django.contrib.auth.models import User
 
-from corporate_asset.models import Company, Employee, Asset, AssetLog
-from corporate_asset.serializers import (CompanySerializer, EmployeeSerializer, AssetSerializer,
-                                         AssetLogSerializer)
+from corporate_asset.models import Company, Employee, Asset, AssetLog, CompanyAdmin
+from corporate_asset.serializers import (CompanySerializer, CompanyAdminSerializer, EmployeeSerializer,
+                                        AssetSerializer, AssetLogSerializer)
 
 # Create your views here.
 
@@ -34,7 +35,42 @@ class CompanyList(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class CompanyAdminList(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        username = request.data.get('username', '')
+        password = request.data.get('password', '')
+        first_name = request.data.get('first_name', '')
+        last_name = request.data.get('last_name', '')
+        email = request.data.get('email', '')
+        company = request.data.get('company', '')
+
+        if username=='' or password=='' or first_name=='' or last_name=='' or email=='' or company=='':
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+        user = User.objects.create_user(username=username,
+                                        password=password,
+                                        email=email,
+                                        first_name=first_name,
+                                        last_name=last_name)
         
+        user.is_staff = False
+        user.is_superuser = False
+        user.save()
+
+        try:
+            company = Company.objects.get(id=company)
+        except:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        
+        company_admin = CompanyAdmin.objects.create(user=user, company=company)
+        serializer = CompanyAdminSerializer(company_admin)
+
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
 
 class EmployeeList(APIView):
     permission_classes = [IsAuthenticated]
