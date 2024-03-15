@@ -1,7 +1,8 @@
 from django.contrib import admin
-from .models import Company, Employee, Asset
+from .models import Company, Employee, Asset, AssetLog
 
 # Register your models here.
 admin.site.register(Company)
 admin.site.register(Employee)
 admin.site.register(Asset)
+admin.site.register(AssetLog)
