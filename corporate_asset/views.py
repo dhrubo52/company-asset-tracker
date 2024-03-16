@@ -245,7 +245,10 @@ class AssetDetail(APIView):
                 except:
                     return Response(status=status.HTTP_400_BAD_REQUEST)
 
-                AssetLog.objects.create(company=company,                        # We create an asset log when the asset has been returned
+                new_data = Asset.objects.get(id=request_data.get('id', ''))
+
+                AssetLog.objects.create(asset=new_data,                         # We create an asset log when the asset has been returned
+                                        company=company,                        
                                         lent_to=lent_to, 
                                         condition_lent=condition_lent,
                                         condition_returned=condition_returned,
